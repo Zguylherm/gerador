@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    frame-ancestors 'none';
+    form-action 'self';
+    img-src 'self' data:;
+    style-src 'self';
+    script-src 'self';
+    connect-src 'self';
+    upgrade-insecure-requests;
+  ">
+
+  <title>Gerador Pro</title>
+  <link rel="stylesheet" href="./css/neon.css">
+</head>
+
+<body>
+
+  <!-- LOGIN SEPARADO -->
+  <section id="loginScreen" class="login-screen">
+    <div class="login-box">
+      <div class="login-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 7a2 2 0 1 1 2 2"></path>
+          <path d="M16.5 8.5 21 4"></path>
+          <path d="m19 6 1.5 1.5"></path>
+          <path d="M9 14a5 5 0 1 1 3.54-8.54"></path>
+          <path d="M4 20h10"></path>
+          <path d="M7 17v3"></path>
+          <path d="M11 17v3"></path>
+        </svg>
+      </div>
+
+      <h1 class="login-title">Acesso Protegido</h1>
+      <p class="login-subtitle">Digite uma key ativa gerada no painel admin.</p>
+
+      <form id="loginForm" autocomplete="off">
+        <input
+          type="text"
+          id="keyInput"
+          placeholder="Digite sua key"
+          autocomplete="off"
+          autocapitalize="characters"
+          spellcheck="false"
+        >
+
+        <button id="loginBtn" type="submit">Entrar</button>
+      </form>
+
+      <p id="loginMsg" class="login-error"></p>
+    </div>
+  </section>
+
+  <!-- APP PRINCIPAL -->
+  <main id="appContainer" class="container hidden">
+
+    <div class="header">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Key ativa
+      </div>
+
+      <h2>KNUZ GEN</h2>
+      <p class="app-subtitle">Painel liberado com validação segura</p>
+    </div>
+
+    <div class="dropdown" id="dropdown">
+      <button class="selected" id="selectedBtn" type="button">
+        <span class="option" id="selectedOption"></span>
+        <span>▼</span>
+      </button>
+
+      <div class="options" id="options">
+
+        <button type="button" class="option-btn" data-type="canva">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <defs>
+              <linearGradient id="canvaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00C4CC"/>
+                <stop offset="50%" stop-color="#7D2AE8"/>
+                <stop offset="100%" stop-color="#FF66C4"/>
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="10" fill="url(#canvaGradient)"/>
+            <path d="M15.1 8.7c-.7-.6-1.5-.9-2.7-.9-2.5 0-4.3 1.8-4.3 4.2s1.8 4.2 4.3 4.2c1.1 0 2-.3 2.7-.9l-.8-1.3c-.5.4-1.1.6-1.8.6-1.5 0-2.5-1.1-2.5-2.6s1-2.6 2.5-2.6c.7 0 1.3.2 1.8.6z" fill="#fff"/>
+          </svg>
+          <span>Canva</span>
+        </button>
+
+        <button type="button" class="option-btn" data-type="spotify">
+          <svg class="icon" viewBox="0 0 168 168" aria-hidden="true">
+            <circle cx="84" cy="84" r="84" fill="#1DB954"/>
+            <path d="M119.6 115.2c-2 3.3-6.2 4.3-9.4 2.3-25.7-15.7-58-19.2-96.1-10.5-3.7.8-7.4-1.5-8.2-5.2-.8-3.7 1.5-7.4 5.2-8.2 41.8-9.5 77.6-5.4 106.2 12.1 3.2 2 4.3 6.2 2.3 9.5z" fill="#000"/>
+            <path d="M129.2 91.5c-2.5 4-7.8 5.3-11.8 2.8-29.4-18.1-74.3-23.4-109.1-12.8-4.5 1.4-9.3-1.2-10.7-5.7-1.4-4.5 1.2-9.3 5.7-10.7 39.8-12.1 89.3-6.2 123.1 14.5 4.1 2.5 5.3 7.8 2.8 11.9z" fill="#000"/>
+            <path d="M130 66.9C94.7 46 36.4 44.1 2.8 54.2c-5.4 1.6-11.1-1.4-12.7-6.8-1.6-5.4 1.4-11.1 6.8-12.7C35.5 23 100.2 25.3 140.3 49c4.9 2.9 6.5 9.1 3.6 14-2.9 4.8-9.1 6.5-13.9 3.9z" fill="#000"/>
+          </svg>
+          <span>Spotify</span>
+        </button>
+
+        <button type="button" class="option-btn" data-type="deezer">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="13" width="3.2" height="7" rx="1" fill="#FF6B00"/>
+            <rect x="6.7" y="10" width="3.2" height="10" rx="1" fill="#FF00A8"/>
+            <rect x="11.4" y="7" width="3.2" height="13" rx="1" fill="#8A2BE2"/>
+            <rect x="16.1" y="4" width="3.2" height="16" rx="1" fill="#00C2FF"/>
+            <rect x="20.8" y="8" width="1.8" height="12" rx=".9" fill="#00E676"/>
+          </svg>
+          <span>Deezer</span>
+        </button>
+
+        <button type="button" class="option-btn" data-type="yt">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2" y="5" width="20" height="14" rx="4" fill="#FF0033"/>
+            <polygon points="10,8.5 16.2,12 10,15.5" fill="#fff"/>
+          </svg>
+          <span>YouTube</span>
+        </button>
+
+      </div>
+    </div>
+
+    <input type="number" id="qtd" placeholder="Quantidade" min="1" max="500">
+
+    <textarea id="resultado" readonly wrap="off" placeholder="Resultado gerado aparecerá aqui..."></textarea>
+
+    <button id="generateBtn" type="button">Gerar</button>
+
+    <div class="top-actions">
+      <button class="btn-secondary" id="copyBtn" type="button">Copiar Resultado</button>
+      <button class="btn-secondary" id="clearBtn" type="button">Limpar</button>
+    </div>
+
+    <div id="keyInfo" class="key-info">Verificando acesso...</div>
+  </main>
+
+  <script src="./js/auth.js" defer></script>
+  <script src="./js/app.js" defer></script>
+</body>
+</html>
