@@ -71,6 +71,7 @@ body::after{
     opacity:.45;
     transform:translateX(-50%) scale(.96);
   }
+
   50%{
     opacity:.9;
     transform:translateX(-50%) scale(1.08);
@@ -122,12 +123,24 @@ body::after{
   box-shadow:
     0 0 28px rgba(255,31,61,0.75),
     0 0 60px rgba(255,31,61,0.30);
+  overflow:hidden;
 }
 
+/* ícone antigo do login em SVG */
 .login-icon svg{
   width:31px;
   height:31px;
   stroke:white;
+  filter:drop-shadow(0 0 10px rgba(255,255,255,0.20));
+}
+
+/* caso algum dia você volte a usar imagem no login */
+.login-img{
+  width:38px;
+  height:38px;
+  object-fit:contain;
+  display:block;
+  filter:drop-shadow(0 0 10px rgba(255,255,255,0.20));
 }
 
 .login-title{
@@ -177,6 +190,7 @@ body::after{
     opacity:0;
     transform:translateY(14px) scale(.98);
   }
+
   to{
     opacity:1;
     transform:translateY(0) scale(1);
@@ -215,6 +229,7 @@ body::after{
     opacity:.55;
     transform:scale(.9);
   }
+
   50%{
     opacity:1;
     transform:scale(1.18);
@@ -308,10 +323,27 @@ h2{
   transform:none;
 }
 
+/* imagens dos ícones do dropdown */
 .icon{
-  width:24px;
-  height:24px;
+  width:28px;
+  height:28px;
+  min-width:28px;
+  border-radius:9px;
+  object-fit:cover;
+  object-position:center;
+  display:block;
   flex:0 0 auto;
+  background:rgba(255,255,255,0.06);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 0 12px rgba(255,31,61,0.12);
+}
+
+/* ícone dentro do item selecionado */
+.selected .icon{
+  width:27px;
+  height:27px;
+  min-width:27px;
 }
 
 /* INPUTS */
@@ -417,6 +449,7 @@ button:disabled{
   text-align:center;
 }
 
+/* MOBILE */
 @media(max-width:520px){
   body{
     padding:16px;
