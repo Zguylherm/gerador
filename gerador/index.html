@@ -2,8 +2,11 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KNUZ GEN PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<title>Gerador Pro</title>
 
 <style>
 *{
@@ -13,7 +16,19 @@
 }
 
 :root{
-    --main:#00C4CC;
+    --main:#ff1f3d;
+    --main-2:#b30016;
+    --bg:#050505;
+    --card:rgba(14,14,16,0.86);
+    --border:rgba(255,255,255,0.10);
+    --muted:rgba(255,255,255,0.62);
+    --danger:#ff3b3b;
+    --success:#2aff86;
+}
+
+html,
+body{
+    min-height:100%;
 }
 
 body{
@@ -21,28 +36,211 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    font-family:'Segoe UI',sans-serif;
-    background:#050505;
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(255,31,61,0.24), transparent 32%),
+        radial-gradient(circle at 15% 85%, rgba(255,31,61,0.12), transparent 28%),
+        radial-gradient(circle at 90% 90%, rgba(179,0,22,0.16), transparent 32%),
+        #050505;
     color:white;
     padding:20px;
+    overflow-x:hidden;
+}
+
+/* fundo led */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+    opacity:.45;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+    background:rgba(255,31,61,0.11);
+    filter:blur(70px);
+    top:-120px;
+    left:50%;
+    transform:translateX(-50%);
+    pointer-events:none;
+    animation:pulseGlow 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow{
+    0%,100%{opacity:.45; transform:translateX(-50%) scale(.96);}
+    50%{opacity:.9; transform:translateX(-50%) scale(1.08);}
+}
+
+/* LOGIN */
+.login-screen{
+    position:fixed;
+    inset:0;
+    z-index:999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:
+        radial-gradient(circle at top, rgba(255,31,61,0.22), transparent 36%),
+        rgba(5,5,5,0.96);
+}
+
+.login-box{
+    width:390px;
+    max-width:100%;
+    padding:28px;
+    border-radius:24px;
+    background:rgba(15,15,18,0.88);
+    border:1px solid rgba(255,255,255,0.10);
+    box-shadow:
+        0 0 30px rgba(255,31,61,0.25),
+        0 0 90px rgba(255,31,61,0.16),
+        inset 0 0 0 1px rgba(255,255,255,0.03);
+    backdrop-filter:blur(18px);
+    animation:showUp .35s ease;
+}
+
+.login-icon{
+    width:62px;
+    height:62px;
+    margin:0 auto 16px;
+    border-radius:21px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        linear-gradient(135deg, rgba(255,31,61,0.95), rgba(80,0,10,0.9));
+    box-shadow:
+        0 0 25px rgba(255,31,61,0.72),
+        0 0 55px rgba(255,31,61,0.28);
+}
+
+.login-icon svg{
+    width:30px;
+    height:30px;
+    stroke:white;
+}
+
+.login-title{
+    text-align:center;
+    font-size:24px;
+    line-height:1.2;
+    margin-bottom:8px;
+}
+
+.login-subtitle{
+    text-align:center;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.login-error{
+    min-height:20px;
+    margin-top:12px;
+    text-align:center;
+    font-size:13px;
+    color:#ff8181;
+}
+
+.login-success{
+    min-height:20px;
+    margin-top:12px;
+    text-align:center;
+    font-size:13px;
+    color:#8effbd;
 }
 
 /* APP CENTRAL */
 .container{
-    width:400px;
+    width:420px;
     max-width:100%;
-    padding:25px;
-    border-radius:18px;
-    background:rgba(20,20,20,0.85);
-    backdrop-filter:blur(15px);
-    box-shadow:0 0 40px var(--main);
+    padding:26px;
+    border-radius:24px;
+    background:rgba(15,15,18,0.86);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,0.10);
+    box-shadow:
+        0 0 30px rgba(255,31,61,0.25),
+        0 0 90px rgba(255,31,61,0.12),
+        inset 0 0 0 1px rgba(255,255,255,0.03);
     transition:0.4s;
+    animation:showUp .35s ease;
+    position:relative;
+    z-index:2;
+}
+
+@keyframes showUp{
+    from{
+        opacity:0;
+        transform:translateY(14px) scale(.98);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.hidden{
+    display:none !important;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 12px;
+    border-radius:999px;
+    background:rgba(255,31,61,0.10);
+    border:1px solid rgba(255,31,61,0.25);
+    color:#ff8a99;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.badge-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--success);
+    box-shadow:0 0 12px var(--success);
+    animation:dotPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes dotPulse{
+    0%,100%{opacity:.55; transform:scale(.9);}
+    50%{opacity:1; transform:scale(1.18);}
 }
 
 h2{
     text-align:center;
-    margin-bottom:20px;
-    color:var(--main);
+    margin-bottom:7px;
+    color:white;
+    font-size:27px;
+    letter-spacing:.5px;
+    text-shadow:0 0 22px rgba(255,31,61,0.45);
+}
+
+.app-subtitle{
+    color:var(--muted);
+    font-size:13px;
+    text-align:center;
 }
 
 /* dropdown */
@@ -54,11 +252,17 @@ h2{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:12px;
-    background:#111;
-    border-radius:10px;
+    padding:13px;
+    background:rgba(5,5,5,0.72);
+    border-radius:14px;
     cursor:pointer;
-    border:1px solid rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.10);
+    transition:.2s;
+}
+
+.selected:hover{
+    border-color:rgba(255,31,61,0.38);
+    box-shadow:0 0 18px rgba(255,31,61,0.13);
 }
 
 .option{
@@ -70,25 +274,28 @@ h2{
 .options{
     position:absolute;
     width:100%;
-    background:#111;
-    border-radius:10px;
-    margin-top:5px;
+    background:rgba(10,10,12,0.96);
+    backdrop-filter:blur(14px);
+    border-radius:14px;
+    margin-top:7px;
     display:none;
     overflow:hidden;
-    border:1px solid rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.10);
     z-index:10;
+    box-shadow:0 18px 40px rgba(0,0,0,0.35);
 }
 
 .options div{
-    padding:12px;
+    padding:13px;
     display:flex;
     gap:10px;
     align-items:center;
     cursor:pointer;
+    transition:.18s;
 }
 
 .options div:hover{
-    background:#222;
+    background:rgba(255,31,61,0.10);
 }
 
 .icon{
@@ -101,58 +308,164 @@ input,
 textarea{
     width:100%;
     margin-top:10px;
-    padding:12px;
+    padding:13px 14px;
     border:none;
     outline:none;
-    border-radius:10px;
-    background:#111;
+    border-radius:14px;
+    background:rgba(5,5,5,0.72);
     color:white;
-    border:1px solid rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.10);
+    transition:.2s;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:rgba(255,255,255,0.35);
 }
 
 input:focus,
 textarea:focus{
-    border-color:var(--main);
-    box-shadow:0 0 12px rgba(255,255,255,0.08);
+    border-color:rgba(255,31,61,0.70);
+    box-shadow:
+        0 0 0 3px rgba(255,31,61,0.12),
+        0 0 20px rgba(255,31,61,0.12);
 }
 
 textarea{
-    height:140px;
-    font-family:monospace;
+    height:150px;
+    font-family:Consolas,monospace;
     resize:none;
+    line-height:1.5;
 }
 
 /* button */
 button{
     width:100%;
     margin-top:10px;
-    padding:12px;
+    padding:13px 14px;
     border:none;
-    border-radius:10px;
-    background:var(--main);
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--main),var(--main-2));
     color:white;
     cursor:pointer;
-    font-weight:600;
-    transition:0.2s;
+    font-weight:800;
+    transition:.2s;
+    box-shadow:
+        0 12px 28px rgba(255,31,61,0.22),
+        0 0 18px rgba(255,31,61,0.18);
 }
 
 button:hover{
-    filter:brightness(1.15);
+    filter:brightness(1.13);
     transform:translateY(-1px);
 }
 
 button:active{
     transform:scale(0.98);
 }
+
+button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.btn-secondary{
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.10);
+    box-shadow:none;
+}
+
+.top-actions{
+    display:flex;
+    gap:10px;
+    margin-top:16px;
+}
+
+.top-actions button{
+    margin-top:0;
+}
+
+.key-info{
+    margin-top:14px;
+    padding:12px;
+    border-radius:14px;
+    background:rgba(255,31,61,0.07);
+    border:1px solid rgba(255,31,61,0.18);
+    color:rgba(255,255,255,0.72);
+    font-size:12px;
+    line-height:1.5;
+    text-align:center;
+}
+
+@media(max-width:480px){
+    body{
+        padding:16px;
+    }
+
+    .container,
+    .login-box{
+        padding:22px;
+        border-radius:21px;
+    }
+
+    h2{
+        font-size:24px;
+    }
+
+    .top-actions{
+        flex-direction:column;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<!-- APP -->
-<div class="container">
+<!-- LOGIN COM KEY -->
+<div id="loginScreen" class="login-screen">
+    <div class="login-box">
+        <div class="login-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 7a2 2 0 1 1 2 2"></path>
+                <path d="M16.5 8.5 21 4"></path>
+                <path d="m19 6 1.5 1.5"></path>
+                <path d="M9 14a5 5 0 1 1 3.54-8.54"></path>
+                <path d="M4 20h10"></path>
+                <path d="M7 17v3"></path>
+                <path d="M11 17v3"></path>
+            </svg>
+        </div>
 
-    <h2>KNUZ GEN</h2>
+        <h1 class="login-title">Acesso Protegido</h1>
+        <p class="login-subtitle">
+            Digite a key gerada no painel admin para entrar no site.
+        </p>
+
+        <input
+            type="text"
+            id="keyInput"
+            placeholder="Digite sua key"
+            autocomplete="off"
+            spellcheck="false"
+        >
+
+        <button id="loginBtn" onclick="loginComKey()">Entrar</button>
+        <p id="loginMsg" class="login-error"></p>
+    </div>
+</div>
+
+<!-- APP -->
+<div id="appContainer" class="container hidden">
+
+    <div class="header">
+        <div class="badge">
+            <span class="badge-dot"></span>
+            Key ativa
+        </div>
+        <h2>KNUZ GEN</h2>
+        <p class="app-subtitle">Painel liberado com validação segura</p>
+    </div>
 
     <div class="dropdown">
         <div class="selected" onclick="toggleDropdown()">
@@ -162,23 +475,23 @@ button:active{
 
         <div class="options" id="options">
 
-            <div onclick="selectOption('canva','#00C4CC',this)">
-                <svg class="icon" viewBox="0 0 24 24" fill="#00C4CC">
+            <div onclick="selectOption('canva','#ff1f3d',this)">
+                <svg class="icon" viewBox="0 0 24 24" fill="#ff1f3d">
                     <circle cx="12" cy="12" r="10"/>
                 </svg>
                 Canva
             </div>
 
-            <div onclick="selectOption('spotify','#1DB954',this)">
+            <div onclick="selectOption('spotify','#ff1f3d',this)">
                 <svg class="icon" viewBox="0 0 168 168">
-                    <circle cx="84" cy="84" r="84" fill="#1DB954"/>
+                    <circle cx="84" cy="84" r="84" fill="#ff1f3d"/>
                     <path d="M40 70c30-10 60-8 90 5" stroke="black" stroke-width="8"/>
                 </svg>
                 Spotify
             </div>
 
-            <div onclick="selectOption('deezer','#ff00aa',this)">
-                <svg class="icon" viewBox="0 0 24 24" fill="#ff00aa">
+            <div onclick="selectOption('deezer','#ff1f3d',this)">
+                <svg class="icon" viewBox="0 0 24 24" fill="#ff1f3d">
                     <rect x="2" y="10" width="4" height="10"/>
                     <rect x="8" y="6" width="4" height="14"/>
                     <rect x="14" y="3" width="4" height="17"/>
@@ -186,9 +499,9 @@ button:active{
                 Deezer
             </div>
 
-            <div onclick="selectOption('yt','#ff0000',this)">
+            <div onclick="selectOption('yt','#ff1f3d',this)">
                 <svg class="icon" viewBox="0 0 24 24">
-                    <rect x="2" y="5" width="20" height="14" rx="4" fill="#ff0000"/>
+                    <rect x="2" y="5" width="20" height="14" rx="4" fill="#ff1f3d"/>
                     <polygon points="10,8 16,12 10,16" fill="white"/>
                 </svg>
                 YouTube
@@ -199,14 +512,223 @@ button:active{
 
     <input type="number" id="qtd" placeholder="Quantidade" min="1">
 
-    <textarea id="resultado" readonly></textarea>
+    <textarea id="resultado" readonly placeholder="Resultado gerado aparecerá aqui..."></textarea>
 
     <button onclick="gerar()">Gerar</button>
+
+    <div class="top-actions">
+        <button class="btn-secondary" onclick="copiarResultado()">Copiar Resultado</button>
+        <button class="btn-secondary" onclick="sair()">Sair</button>
+    </div>
+
+    <div id="keyInfo" class="key-info">
+        Verificando acesso...
+    </div>
 
 </div>
 
 <script>
+/*
+  Usa o proxy do Netlify.
+  No netlify.toml:
+  /api/* -> https://SEU-SERVIDOR-FASTAPI.onrender.com/:splat
+*/
+const API_BASE = "/api";
+
 let tipoSelecionado = "canva";
+let validationTimer = null;
+
+const loginScreen = document.getElementById("loginScreen");
+const appContainer = document.getElementById("appContainer");
+const keyInput = document.getElementById("keyInput");
+const loginBtn = document.getElementById("loginBtn");
+const loginMsg = document.getElementById("loginMsg");
+const keyInfo = document.getElementById("keyInfo");
+
+function escapeHTML(value){
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+}
+
+function setLoading(button, loading, loadingText, normalText){
+    button.disabled = loading;
+    button.textContent = loading ? loadingText : normalText;
+}
+
+function salvarKey(key){
+    localStorage.setItem("user_key", key);
+}
+
+function pegarKey(){
+    return localStorage.getItem("user_key");
+}
+
+function removerKey(){
+    localStorage.removeItem("user_key");
+    localStorage.removeItem("key_expires_at");
+}
+
+function mostrarLogin(msg = ""){
+    loginScreen.classList.remove("hidden");
+    appContainer.classList.add("hidden");
+
+    if(validationTimer){
+        clearInterval(validationTimer);
+        validationTimer = null;
+    }
+
+    if(msg){
+        loginMsg.textContent = msg;
+        loginMsg.className = "login-error";
+    }
+}
+
+function mostrarApp(data){
+    loginScreen.classList.add("hidden");
+    appContainer.classList.remove("hidden");
+
+    if(data && data.expires_at){
+        localStorage.setItem("key_expires_at", data.expires_at);
+        keyInfo.textContent = `Acesso liberado até: ${formatDate(new Date(data.expires_at))}`;
+    }else{
+        keyInfo.textContent = "Acesso liberado.";
+    }
+
+    iniciarVerificacaoAutomatica();
+}
+
+async function validarKey(key){
+    const response = await fetch(`${API_BASE}/validate-key`, {
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            key:key
+        })
+    });
+
+    const data = await response.json().catch(() => ({}));
+
+    if(!response.ok){
+        throw new Error(data.detail || data.message || "Erro ao validar key.");
+    }
+
+    return data;
+}
+
+async function loginComKey(){
+    const key = keyInput.value.trim();
+
+    if(!key){
+        loginMsg.textContent = "Digite uma key.";
+        loginMsg.className = "login-error";
+        return;
+    }
+
+    loginMsg.textContent = "";
+    setLoading(loginBtn, true, "Validando...", "Entrar");
+
+    try{
+        const data = await validarKey(key);
+
+        if(!data.valid){
+            removerKey();
+            loginMsg.textContent = data.message || "Key inválida.";
+            loginMsg.className = "login-error";
+            return;
+        }
+
+        salvarKey(key);
+        keyInput.value = "";
+        loginMsg.textContent = "";
+        mostrarApp(data);
+
+    }catch(error){
+        removerKey();
+        loginMsg.textContent = error.message || "Erro ao validar key.";
+        loginMsg.className = "login-error";
+    }finally{
+        setLoading(loginBtn, false, "Validando...", "Entrar");
+    }
+}
+
+async function verificarSessao(){
+    const keySalva = pegarKey();
+
+    if(!keySalva){
+        mostrarLogin();
+        return;
+    }
+
+    try{
+        const data = await validarKey(keySalva);
+
+        if(data.valid){
+            mostrarApp(data);
+        }else{
+            removerKey();
+            mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+        }
+
+    }catch(error){
+        removerKey();
+        mostrarLogin("Não foi possível validar sua key.");
+    }
+}
+
+function iniciarVerificacaoAutomatica(){
+    if(validationTimer){
+        clearInterval(validationTimer);
+    }
+
+    validationTimer = setInterval(async () => {
+        const keySalva = pegarKey();
+
+        if(!keySalva){
+            mostrarLogin();
+            return;
+        }
+
+        try{
+            const data = await validarKey(keySalva);
+
+            if(!data.valid){
+                removerKey();
+                mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+            }else if(data.expires_at){
+                keyInfo.textContent = `Acesso liberado até: ${formatDate(new Date(data.expires_at))}`;
+            }
+
+        }catch{
+            removerKey();
+            mostrarLogin("Sessão encerrada. Valide sua key novamente.");
+        }
+    }, 60000);
+}
+
+function sair(){
+    removerKey();
+    mostrarLogin("Você saiu do painel.");
+}
+
+function formatDate(date){
+    if(Number.isNaN(date.getTime())){
+        return "-";
+    }
+
+    return date.toLocaleString("pt-BR", {
+        day:"2-digit",
+        month:"2-digit",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+    });
+}
 
 /* dropdown */
 function toggleDropdown(){
@@ -217,15 +739,28 @@ function toggleDropdown(){
 function selectOption(tipo, cor, el){
     tipoSelecionado = tipo;
     document.getElementById("selectedOption").innerHTML = el.innerHTML;
-    document.documentElement.style.setProperty("--main", cor);
+
+    /*
+      Mantém tudo em neon vermelho.
+      A cor recebida fica vermelha mesmo.
+    */
+    document.documentElement.style.setProperty("--main", "#ff1f3d");
+    document.documentElement.style.setProperty("--main-2", "#b30016");
     document.getElementById("options").style.display = "none";
 }
 
 /* default */
-selectOption("canva", "#00C4CC", document.querySelectorAll(".options div")[0]);
+selectOption("canva", "#ff1f3d", document.querySelectorAll(".options div")[0]);
 
 /* gerar */
 function gerar(){
+    const keySalva = pegarKey();
+
+    if(!keySalva){
+        mostrarLogin("Digite uma key válida para acessar.");
+        return;
+    }
+
     const qtd = Number(document.getElementById("qtd").value);
     const out = document.getElementById("resultado");
 
@@ -271,14 +806,37 @@ function gerar(){
     out.value = lista.join("\n");
 }
 
+function copiarResultado(){
+    const out = document.getElementById("resultado");
+
+    if(!out.value.trim()){
+        keyInfo.textContent = "Nenhum resultado para copiar.";
+        return;
+    }
+
+    navigator.clipboard.writeText(out.value).then(() => {
+        keyInfo.textContent = "Resultado copiado com sucesso.";
+    }).catch(() => {
+        keyInfo.textContent = "Não foi possível copiar.";
+    });
+}
+
 /* fechar dropdown clicando fora */
 document.addEventListener("click", function(e){
     const dropdown = document.querySelector(".dropdown");
 
-    if(!dropdown.contains(e.target)){
+    if(dropdown && !dropdown.contains(e.target)){
         document.getElementById("options").style.display = "none";
     }
 });
+
+keyInput.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+        loginComKey();
+    }
+});
+
+window.addEventListener("load", verificarSessao);
 </script>
 
 </body>
