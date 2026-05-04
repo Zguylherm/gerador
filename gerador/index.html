@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KNUZ GEN PRO</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --main:#00C4CC;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Segoe UI',sans-serif;
+    background:#050505;
+    color:white;
+    padding:20px;
+}
+
+/* APP CENTRAL */
+.container{
+    width:400px;
+    max-width:100%;
+    padding:25px;
+    border-radius:18px;
+    background:rgba(20,20,20,0.85);
+    backdrop-filter:blur(15px);
+    box-shadow:0 0 40px var(--main);
+    transition:0.4s;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:var(--main);
+}
+
+/* dropdown */
+.dropdown{
+    position:relative;
+}
+
+.selected{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px;
+    background:#111;
+    border-radius:10px;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.option{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.options{
+    position:absolute;
+    width:100%;
+    background:#111;
+    border-radius:10px;
+    margin-top:5px;
+    display:none;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.08);
+    z-index:10;
+}
+
+.options div{
+    padding:12px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    cursor:pointer;
+}
+
+.options div:hover{
+    background:#222;
+}
+
+.icon{
+    width:22px;
+    height:22px;
+}
+
+/* inputs */
+input,
+textarea{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border:none;
+    outline:none;
+    border-radius:10px;
+    background:#111;
+    color:white;
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+input:focus,
+textarea:focus{
+    border-color:var(--main);
+    box-shadow:0 0 12px rgba(255,255,255,0.08);
+}
+
+textarea{
+    height:140px;
+    font-family:monospace;
+    resize:none;
+}
+
+/* button */
+button{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:var(--main);
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.2s;
+}
+
+button:hover{
+    filter:brightness(1.15);
+    transform:translateY(-1px);
+}
+
+button:active{
+    transform:scale(0.98);
+}
+</style>
+</head>
+
+<body>
+
+<!-- APP -->
+<div class="container">
+
+    <h2>KNUZ GEN</h2>
+
+    <div class="dropdown">
+        <div class="selected" onclick="toggleDropdown()">
+            <div class="option" id="selectedOption"></div>
+            <span>▼</span>
+        </div>
+
+        <div class="options" id="options">
+
+            <div onclick="selectOption('canva','#00C4CC',this)">
+                <svg class="icon" viewBox="0 0 24 24" fill="#00C4CC">
+                    <circle cx="12" cy="12" r="10"/>
+                </svg>
+                Canva
+            </div>
+
+            <div onclick="selectOption('spotify','#1DB954',this)">
+                <svg class="icon" viewBox="0 0 168 168">
+                    <circle cx="84" cy="84" r="84" fill="#1DB954"/>
+                    <path d="M40 70c30-10 60-8 90 5" stroke="black" stroke-width="8"/>
+                </svg>
+                Spotify
+            </div>
+
+            <div onclick="selectOption('deezer','#ff00aa',this)">
+                <svg class="icon" viewBox="0 0 24 24" fill="#ff00aa">
+                    <rect x="2" y="10" width="4" height="10"/>
+                    <rect x="8" y="6" width="4" height="14"/>
+                    <rect x="14" y="3" width="4" height="17"/>
+                </svg>
+                Deezer
+            </div>
+
+            <div onclick="selectOption('yt','#ff0000',this)">
+                <svg class="icon" viewBox="0 0 24 24">
+                    <rect x="2" y="5" width="20" height="14" rx="4" fill="#ff0000"/>
+                    <polygon points="10,8 16,12 10,16" fill="white"/>
+                </svg>
+                YouTube
+            </div>
+
+        </div>
+    </div>
+
+    <input type="number" id="qtd" placeholder="Quantidade" min="1">
+
+    <textarea id="resultado" readonly></textarea>
+
+    <button onclick="gerar()">Gerar</button>
+
+</div>
+
+<script>
+let tipoSelecionado = "canva";
+
+/* dropdown */
+function toggleDropdown(){
+    const options = document.getElementById("options");
+    options.style.display = options.style.display === "block" ? "none" : "block";
+}
+
+function selectOption(tipo, cor, el){
+    tipoSelecionado = tipo;
+    document.getElementById("selectedOption").innerHTML = el.innerHTML;
+    document.documentElement.style.setProperty("--main", cor);
+    document.getElementById("options").style.display = "none";
+}
+
+/* default */
+selectOption("canva", "#00C4CC", document.querySelectorAll(".options div")[0]);
+
+/* gerar */
+function gerar(){
+    const qtd = Number(document.getElementById("qtd").value);
+    const out = document.getElementById("resultado");
+
+    if(!qtd || qtd <= 0){
+        out.value = "Digite uma quantidade válida.";
+        return;
+    }
+
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    function rand(){
+        return Array.from(
+            { length:15 },
+            () => chars[Math.floor(Math.random() * chars.length)]
+        ).join("");
+    }
+
+    const lista = [];
+
+    for(let i = 0; i < qtd; i++){
+        const code = rand();
+        let link = "";
+
+        if(tipoSelecionado === "canva"){
+            link = `https://www.canva.com/pro/?utm_medium=${code}`;
+        }
+
+        if(tipoSelecionado === "spotify"){
+            link = `https://www.spotify.com/br-pt/premium/?utm_medium=${code}`;
+        }
+
+        if(tipoSelecionado === "deezer"){
+            link = `https://www.deezer.com/pt/offers/?utm_medium=${code}`;
+        }
+
+        if(tipoSelecionado === "yt"){
+            link = `https://www.youtube.com/premium?utm_medium=${code}`;
+        }
+
+        lista.push(link);
+    }
+
+    out.value = lista.join("\n");
+}
+
+/* fechar dropdown clicando fora */
+document.addEventListener("click", function(e){
+    const dropdown = document.querySelector(".dropdown");
+
+    if(!dropdown.contains(e.target)){
+        document.getElementById("options").style.display = "none";
+    }
+});
+</script>
+
+</body>
+</html>
