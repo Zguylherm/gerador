@@ -26,22 +26,38 @@
 
 <body>
 
+  <a
+    class="discord-float"
+    href="https://discord.gg/SEU-LINK"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Entrar no Discord"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M19.54 5.35A16.5 16.5 0 0 0 15.52 4l-.2.36a12.6 12.6 0 0 1 3.52 1.78 11.9 11.9 0 0 0-4.18-1.28 12 12 0 0 0-5.32 0 11.9 11.9 0 0 0-4.18 1.28A12.6 12.6 0 0 1 8.68 4.36L8.48 4a16.5 16.5 0 0 0-4.02 1.35C1.92 9.12 1.23 12.8 1.57 16.42A16.6 16.6 0 0 0 6.5 18.9l.6-.82a10.8 10.8 0 0 1-1.9-.92l.45-.34a12.6 12.6 0 0 0 12.7 0l.45.34a10.8 10.8 0 0 1-1.9.92l.6.82a16.6 16.6 0 0 0 4.93-2.48c.4-4.2-.68-7.84-2.89-11.07ZM8.35 14.2c-.95 0-1.72-.88-1.72-1.96s.75-1.96 1.72-1.96c.96 0 1.74.88 1.72 1.96 0 1.08-.76 1.96-1.72 1.96Zm7.3 0c-.95 0-1.72-.88-1.72-1.96s.75-1.96 1.72-1.96c.96 0 1.74.88 1.72 1.96 0 1.08-.76 1.96-1.72 1.96Z"/>
+    </svg>
+  </a>
+
   <section id="loginScreen" class="login-screen">
     <div class="login-box">
-      <div class="login-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 7a2 2 0 1 1 2 2"></path>
-          <path d="M16.5 8.5 21 4"></path>
-          <path d="m19 6 1.5 1.5"></path>
-          <path d="M9 14a5 5 0 1 1 3.54-8.54"></path>
-          <path d="M4 20h10"></path>
-          <path d="M7 17v3"></path>
-          <path d="M11 17v3"></path>
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64">
+          <defs>
+            <linearGradient id="veltrixGradient" x1="10" y1="8" x2="54" y2="58">
+              <stop offset="0%" stop-color="#77d9ff"/>
+              <stop offset="48%" stop-color="#ff2b4f"/>
+              <stop offset="100%" stop-color="#7a0bff"/>
+            </linearGradient>
+          </defs>
+          <path class="orbit orbit-a" d="M10 34c8-17 33-24 44-10"/>
+          <path class="orbit orbit-b" d="M54 30c-8 17-33 24-44 10"/>
+          <path class="v-shape" d="M18 15l14 34 14-34"/>
+          <circle cx="32" cy="32" r="3.2"/>
         </svg>
       </div>
 
       <h1 class="login-title">Veltrix Space</h1>
-      <p class="login-subtitle">By - zGuylherme</p>
+      <p class="login-subtitle">Acesso privado para membros com key ativa.</p>
 
       <form id="loginForm" autocomplete="off">
         <input
@@ -54,6 +70,15 @@
         >
 
         <button id="loginBtn" type="submit">Entrar</button>
+
+        <a
+          class="buy-key-link"
+          href="https://SEU-LINK-DE-COMPRA.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Comprar Key Agora
+        </a>
       </form>
 
       <p id="loginMsg" class="login-error"></p>
@@ -63,14 +88,29 @@
   <main id="appContainer" class="container hidden">
 
     <div class="header">
+      <div class="brand-mark app-brand" aria-hidden="true">
+        <svg viewBox="0 0 64 64">
+          <defs>
+            <linearGradient id="veltrixGradientApp" x1="10" y1="8" x2="54" y2="58">
+              <stop offset="0%" stop-color="#77d9ff"/>
+              <stop offset="48%" stop-color="#ff2b4f"/>
+              <stop offset="100%" stop-color="#7a0bff"/>
+            </linearGradient>
+          </defs>
+          <path class="orbit orbit-a" d="M10 34c8-17 33-24 44-10"/>
+          <path class="orbit orbit-b" d="M54 30c-8 17-33 24-44 10"/>
+          <path class="v-shape" d="M18 15l14 34 14-34"/>
+          <circle cx="32" cy="32" r="3.2"/>
+        </svg>
+      </div>
+
       <div class="badge">
         <span class="badge-dot"></span>
         Key ativa
       </div>
 
       <h2>Veltrix Space</h2>
-      <p class="app-subtitle">By - zGuylherme</p>
-      <p class="app-subtitle">Painel liberado com validação segura</p>
+      <p class="app-subtitle">Escolha uma plataforma e gere seus links com acesso validado.</p>
     </div>
 
     <div class="dropdown" id="dropdown">
