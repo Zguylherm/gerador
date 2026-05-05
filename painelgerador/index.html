@@ -6,307 +6,609 @@
   <meta name="color-scheme" content="dark">
   <meta name="referrer" content="no-referrer">
   <meta name="robots" content="noindex, nofollow">
-  <title>Painel Admin - Keys</title>
+
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    base-uri 'self';
+    object-src 'none';
+    frame-ancestors 'none';
+    form-action 'self';
+    img-src 'self' data: https:;
+    style-src 'self' 'unsafe-inline';
+    script-src 'self' 'unsafe-inline';
+    connect-src 'self';
+    upgrade-insecure-requests;
+  ">
+
+  <title>Veltrix Admin - Keys</title>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      -webkit-tap-highlight-color:transparent;
     }
 
-    :root {
-      --main: #ff2a2a;
-      --bg: #050505;
-      --card: rgba(18, 18, 18, 0.88);
-      --border: rgba(255, 255, 255, 0.1);
-      --text: #ffffff;
-      --muted: rgba(255, 255, 255, 0.62);
-      --danger: #ff3b3b;
-      --success: #2aff86;
-      --warning: #ffcc66;
+    :root{
+      --bg:#050506;
+      --card:#0d0e12;
+      --card-2:#111218;
+      --soft:#171922;
+      --text:#f5f5f7;
+      --muted:rgba(255,255,255,.62);
+      --border:rgba(255,255,255,.085);
+      --danger:#ff2446;
+      --danger-2:#c70025;
+      --success:#28e88b;
+      --warning:#ffd166;
+      --blue:#77d6ff;
     }
 
-    body {
-      min-height: 100vh;
-      font-family: "Segoe UI", Arial, sans-serif;
+    html,
+    body{
+      min-height:100%;
+    }
+
+    body{
+      min-height:100vh;
+      font-family:"Segoe UI", Arial, sans-serif;
       background:
-        radial-gradient(circle at top, rgba(255, 42, 42, 0.18), transparent 35%),
-        radial-gradient(circle at bottom right, rgba(255, 42, 42, 0.08), transparent 30%),
-        var(--bg);
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 22px;
-      overflow-x: hidden;
+        radial-gradient(circle at 50% 0%, rgba(150,0,28,.28), transparent 34%),
+        radial-gradient(circle at 12% 88%, rgba(119,214,255,.08), transparent 26%),
+        linear-gradient(180deg, #050506 0%, #050506 100%);
+      color:var(--text);
+      padding:22px;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(rgba(255,255,255,.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.016) 1px, transparent 1px);
+      background-size:48px 48px;
+      opacity:.20;
+      mask-image:linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
     }
 
     button,
     input,
-    select {
-      font: inherit;
+    select{
+      font:inherit;
     }
 
-    .hidden {
-      display: none !important;
+    .hidden{
+      display:none !important;
     }
 
-    .login-screen {
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at top, rgba(255, 42, 42, 0.2), transparent 35%),
-        #050505;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      padding: 22px;
+    .login-screen{
+      position:fixed;
+      inset:0;
+      z-index:999;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background:rgba(5,5,6,.86);
     }
 
-    .login-box,
-    .admin-panel {
-      width: 100%;
-      max-width: 470px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 26px;
-      backdrop-filter: blur(18px);
+    .login-box{
+      width:420px;
+      max-width:100%;
+      padding:30px;
+      border-radius:28px;
+      background:linear-gradient(180deg, rgba(14,15,20,.96), rgba(10,11,15,.98));
+      border:1px solid var(--border);
       box-shadow:
-        0 0 45px rgba(255, 42, 42, 0.22),
-        inset 0 0 0 1px rgba(255,255,255,0.03);
-      animation: showUp 0.35s ease;
+        0 0 0 1px rgba(255,255,255,.025) inset,
+        0 0 58px rgba(180,0,32,.24);
+      animation:fadeIn .28s ease both;
     }
 
-    @keyframes showUp {
-      from {
-        opacity: 0;
-        transform: translateY(12px) scale(0.98);
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(10px);
       }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+      to{
+        opacity:1;
+        transform:translateY(0);
       }
     }
 
-    .brand {
-      text-align: center;
-      margin-bottom: 22px;
+    .admin-shell{
+      width:min(1120px, 100%);
+      margin:0 auto;
+      position:relative;
+      z-index:1;
+      display:grid;
+      gap:18px;
     }
 
-    h1 {
-      font-size: 23px;
-      line-height: 1.2;
-      color: white;
+    .admin-panel{
+      width:100%;
+      border-radius:30px;
+      background:linear-gradient(180deg, rgba(14,15,20,.96), rgba(9,10,14,.98));
+      border:1px solid var(--border);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,.025) inset,
+        0 0 70px rgba(180,0,32,.20);
+      overflow:hidden;
+      animation:fadeIn .28s ease both;
     }
 
-    .subtitle {
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 14px;
+    .panel-header{
+      padding:24px;
+      border-bottom:1px solid rgba(255,255,255,.065);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(255,36,70,.12), transparent 35%),
+        rgba(255,255,255,.012);
     }
 
-    label {
-      display: block;
-      font-size: 13px;
-      color: var(--muted);
-      margin: 14px 0 7px;
+    .brand-row{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:54px;
+      height:54px;
+      border-radius:18px;
+      flex:0 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg, rgba(255,36,70,.85), rgba(25,19,32,.95));
+      border:1px solid rgba(255,255,255,.09);
+      box-shadow:0 0 28px rgba(255,36,70,.16);
+    }
+
+    .brand-mark svg{
+      width:30px;
+      height:30px;
+      stroke:#fff;
+      filter:drop-shadow(0 0 8px rgba(255,255,255,.16));
+    }
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-title{
+      font-size:22px;
+      line-height:1.1;
+      letter-spacing:-.02em;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .brand-subtitle{
+      margin-top:6px;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .header-actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.035);
+      border:1px solid rgba(255,255,255,.075);
+      color:rgba(255,255,255,.76);
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    .status-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--success);
+      box-shadow:0 0 10px rgba(40,232,139,.55);
+    }
+
+    .panel-body{
+      padding:24px;
+      display:grid;
+      grid-template-columns:380px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    .card{
+      background:rgba(255,255,255,.025);
+      border:1px solid rgba(255,255,255,.075);
+      border-radius:22px;
+      padding:18px;
+    }
+
+    .card-title{
+      font-size:14px;
+      font-weight:800;
+      margin-bottom:12px;
+      color:rgba(255,255,255,.92);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .mini-label{
+      font-size:11px;
+      color:var(--muted);
+      font-weight:600;
+    }
+
+    label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin:14px 0 7px;
     }
 
     input,
-    select {
-      width: 100%;
-      border: 1px solid var(--border);
-      outline: none;
-      border-radius: 14px;
-      padding: 13px 14px;
-      background: rgba(5, 5, 5, 0.72);
-      color: white;
-      transition: 0.2s ease;
+    select{
+      width:100%;
+      border:1px solid rgba(255,255,255,.075);
+      outline:none;
+      border-radius:15px;
+      padding:13px 14px;
+      background:rgba(6,7,10,.96);
+      color:white;
+      transition:.18s ease;
+    }
+
+    input::placeholder{
+      color:rgba(255,255,255,.34);
     }
 
     input:focus,
-    select:focus {
-      border-color: var(--main);
-      box-shadow: 0 0 0 3px rgba(255, 42, 42, 0.14);
+    select:focus{
+      border-color:rgba(255,255,255,.16);
+      box-shadow:0 0 0 3px rgba(255,255,255,.035);
     }
 
-    select {
-      cursor: pointer;
+    select{
+      cursor:pointer;
     }
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 14px;
-      padding: 13px 14px;
-      margin-top: 14px;
-      background: linear-gradient(135deg, #ff2a2a, #b40000);
-      color: white;
-      font-weight: 800;
-      cursor: pointer;
-      transition: 0.2s ease;
-      box-shadow: 0 12px 26px rgba(255, 42, 42, 0.18);
+    button{
+      width:100%;
+      border:none;
+      border-radius:15px;
+      padding:13px 14px;
+      margin-top:12px;
+      background:linear-gradient(180deg, var(--danger), var(--danger-2));
+      color:white;
+      font-weight:850;
+      cursor:pointer;
+      transition:.18s ease;
     }
 
-    button:hover {
-      filter: brightness(1.12);
-      transform: translateY(-1px);
+    button:hover{
+      filter:brightness(1.04);
+      transform:translateY(-1px);
     }
 
-    button:active {
-      transform: scale(0.98);
+    button:active{
+      transform:translateY(0);
     }
 
-    button:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-      transform: none;
+    button:disabled{
+      opacity:.58;
+      cursor:not-allowed;
+      transform:none;
     }
 
-    .btn-secondary {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid var(--border);
-      box-shadow: none;
+    .btn-secondary{
+      background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:none;
     }
 
-    .btn-offline {
-      background: rgba(255, 59, 59, 0.12);
-      border: 1px solid rgba(255, 59, 59, 0.35);
-      color: #ff8a8a;
-      box-shadow: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      font-size: 13px;
+    .btn-ghost{
+      background:transparent;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:none;
     }
 
-    .btn-online {
-      background: rgba(42, 255, 134, 0.1);
-      border: 1px solid rgba(42, 255, 134, 0.28);
-      color: #8effbd;
-      box-shadow: none;
-      margin-top: 10px;
-      padding: 10px 12px;
-      font-size: 13px;
+    .btn-offline{
+      background:rgba(255,59,59,.095);
+      border:1px solid rgba(255,59,59,.25);
+      color:#ff9a9a;
+      box-shadow:none;
+      margin-top:10px;
+      padding:10px 12px;
+      font-size:13px;
     }
 
-    .error {
-      min-height: 20px;
-      margin-top: 10px;
-      color: #ff6b6b;
-      font-size: 13px;
-      text-align: center;
+    .btn-online{
+      background:rgba(40,232,139,.09);
+      border:1px solid rgba(40,232,139,.25);
+      color:#93ffc8;
+      box-shadow:none;
+      margin-top:10px;
+      padding:10px 12px;
+      font-size:13px;
     }
 
-    .success-msg {
-      min-height: 20px;
-      margin-top: 10px;
-      color: #8effbd;
-      font-size: 13px;
-      text-align: center;
+    .login-title{
+      text-align:center;
+      font-size:24px;
+      letter-spacing:-.02em;
     }
 
-    .result-box {
-      margin-top: 18px;
-      padding: 14px;
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid var(--border);
-      border-radius: 16px;
+    .login-subtitle{
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+      margin-top:7px;
+      margin-bottom:20px;
     }
 
-    .result-title {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 8px;
+    .error{
+      min-height:20px;
+      margin-top:10px;
+      color:#ff8181;
+      font-size:13px;
+      text-align:center;
     }
 
-    .generated-key {
-      width: 100%;
-      min-height: 46px;
-      border-radius: 12px;
-      background: #080808;
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 13px;
-      font-family: Consolas, monospace;
-      color: #fff;
-      word-break: break-all;
-      line-height: 1.4;
+    .success-msg{
+      min-height:20px;
+      margin-top:12px;
+      color:#94ffc8;
+      font-size:13px;
+      text-align:center;
     }
 
-    .info {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
+    .result-box{
+      margin-top:16px;
+      padding:14px;
+      background:rgba(0,0,0,.26);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:18px;
     }
 
-    .keys-list {
-      margin-top: 18px;
-      max-height: 300px;
-      overflow: auto;
-      padding-right: 4px;
+    .result-title{
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:8px;
     }
 
-    .key-item {
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.045);
-      border: 1px solid rgba(255,255,255,0.08);
-      margin-bottom: 10px;
+    .generated-key{
+      width:100%;
+      min-height:48px;
+      border-radius:14px;
+      background:rgba(4,5,8,.98);
+      border:1px solid rgba(255,255,255,.075);
+      padding:13px;
+      font-family:Consolas, monospace;
+      color:#fff;
+      word-break:break-all;
+      line-height:1.4;
+      user-select:text;
     }
 
-    .key-item.offline {
-      border-color: rgba(255, 59, 59, 0.35);
-      background: rgba(255, 59, 59, 0.06);
+    .info{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
     }
 
-    .key-code {
-      font-family: Consolas, monospace;
-      font-size: 13px;
-      word-break: break-all;
+    .db-box{
+      margin-top:14px;
+      display:grid;
+      gap:8px;
     }
 
-    .key-date {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 6px;
+    .db-line{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.025);
+      border:1px solid rgba(255,255,255,.055);
+      font-size:12px;
+      color:rgba(255,255,255,.70);
     }
 
-    .status-active {
-      color: var(--success);
-      font-weight: 700;
+    .db-line strong{
+      color:#fff;
+      font-weight:750;
+      text-align:right;
     }
 
-    .status-expired {
-      color: var(--warning);
-      font-weight: 700;
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:10px;
+      margin-bottom:14px;
     }
 
-    .status-offline {
-      color: var(--danger);
-      font-weight: 700;
+    .stat-card{
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.025);
+      border:1px solid rgba(255,255,255,.065);
     }
 
-    .top-actions {
-      display: flex;
-      gap: 10px;
+    .stat-number{
+      font-size:22px;
+      font-weight:900;
+      line-height:1;
+      letter-spacing:-.03em;
     }
 
-    .top-actions button {
-      margin-top: 0;
+    .stat-label{
+      margin-top:7px;
+      color:var(--muted);
+      font-size:12px;
     }
 
-    @media (max-width: 480px) {
-      .login-box,
-      .admin-panel {
-        padding: 22px;
-        border-radius: 20px;
+    .tools-row{
+      display:grid;
+      grid-template-columns:1fr 150px;
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .keys-list{
+      max-height:560px;
+      overflow:auto;
+      padding-right:4px;
+    }
+
+    .keys-list::-webkit-scrollbar{
+      width:8px;
+    }
+
+    .keys-list::-webkit-scrollbar-thumb{
+      background:rgba(255,255,255,.12);
+      border-radius:999px;
+    }
+
+    .key-item{
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.028);
+      border:1px solid rgba(255,255,255,.07);
+      margin-bottom:10px;
+    }
+
+    .key-item.offline{
+      border-color:rgba(255,59,59,.25);
+      background:rgba(255,59,59,.045);
+    }
+
+    .key-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+    }
+
+    .key-code{
+      font-family:Consolas, monospace;
+      font-size:13px;
+      word-break:break-all;
+      user-select:text;
+      line-height:1.45;
+    }
+
+    .key-date{
+      color:var(--muted);
+      font-size:12px;
+      margin-top:7px;
+      line-height:1.45;
+    }
+
+    .status-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      padding:5px 8px;
+      font-size:11px;
+      font-weight:800;
+      white-space:nowrap;
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .status-active{
+      color:#9fffd0;
+      background:rgba(40,232,139,.08);
+      border-color:rgba(40,232,139,.22);
+    }
+
+    .status-expired{
+      color:#ffe2a0;
+      background:rgba(255,209,102,.08);
+      border-color:rgba(255,209,102,.20);
+    }
+
+    .status-offline{
+      color:#ff9a9a;
+      background:rgba(255,59,59,.08);
+      border-color:rgba(255,59,59,.22);
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+    }
+
+    .top-actions button{
+      margin-top:0;
+    }
+
+    @media(max-width:900px){
+      .panel-body{
+        grid-template-columns:1fr;
       }
 
-      h1 {
-        font-size: 20px;
+      .stats-grid{
+        grid-template-columns:repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width:520px){
+      body{
+        padding:14px;
+      }
+
+      .login-box{
+        padding:24px;
+        border-radius:24px;
+      }
+
+      .panel-header{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .header-actions{
+        width:100%;
+      }
+
+      .header-actions button,
+      .header-actions .status-pill{
+        flex:1;
+      }
+
+      .panel-body{
+        padding:16px;
+      }
+
+      .tools-row{
+        grid-template-columns:1fr;
+      }
+
+      .stats-grid{
+        grid-template-columns:1fr;
       }
     }
   </style>
@@ -314,15 +616,26 @@
 
 <body>
 
-  <!-- LOGIN -->
   <div id="loginScreen" class="login-screen">
     <div class="login-box">
-      <div class="brand">
-        <h1>Painel Admin</h1>
-        <p class="subtitle"></p>
+      <div class="brand-row" style="justify-content:center; margin-bottom:18px;">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 7a2 2 0 1 1 2 2"></path>
+            <path d="M16.5 8.5 21 4"></path>
+            <path d="m19 6 1.5 1.5"></path>
+            <path d="M9 14a5 5 0 1 1 3.54-8.54"></path>
+            <path d="M4 20h10"></path>
+            <path d="M7 17v3"></path>
+            <path d="M11 17v3"></path>
+          </svg>
+        </div>
       </div>
 
-      <label for="adminPassword"></label>
+      <h1 class="login-title">Veltrix Admin</h1>
+      <p class="login-subtitle">Painel privado para gerenciamento de keys.</p>
+
+      <label for="adminPassword">Senha admin</label>
       <input
         type="password"
         id="adminPassword"
@@ -330,46 +643,141 @@
         autocomplete="current-password"
       >
 
-      <button id="loginBtn" onclick="loginAdmin()">Entrar</button>
+      <button id="loginBtn">Entrar</button>
       <p id="loginError" class="error"></p>
     </div>
   </div>
 
-  <!-- PAINEL ADMIN -->
-  <main id="adminPanel" class="admin-panel hidden">
-    <div class="brand">
-      <h1>Gerador de Keys</h1>
-      <p class="subtitle">by zGuylherme</p>
-    </div>
+  <section id="adminPanel" class="admin-shell hidden">
+    <main class="admin-panel">
+      <header class="panel-header">
+        <div class="brand-row">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3 4 7v6c0 5 3.4 7.9 8 9 4.6-1.1 8-4 8-9V7l-8-4Z"></path>
+              <path d="M9 12h6"></path>
+              <path d="M12 9v6"></path>
+            </svg>
+          </div>
 
-    <label for="duration">Duração da key</label>
-    <select id="duration">
-      <option value="1">1 dia</option>
-      <option value="3">3 dias</option>
-      <option value="7">7 dias</option>
-      <option value="15">15 dias</option>
-      <option value="30">30 dias</option>
-    </select>
+          <div class="brand-text">
+            <h1 class="brand-title">Veltrix Key Manager</h1>
+            <p class="brand-subtitle">Gerenciamento seguro de acesso • by zGuylherme</p>
+          </div>
+        </div>
 
-    <button id="createBtn" onclick="gerarKey()">Gerar Key</button>
+        <div class="header-actions">
+          <div id="apiStatus" class="status-pill">
+            <span class="status-dot"></span>
+            API conectada
+          </div>
+          <button id="refreshBtn" class="btn-secondary">Atualizar</button>
+          <button id="logoutBtn" class="btn-ghost">Sair</button>
+        </div>
+      </header>
 
-    <div class="result-box">
-      <p class="result-title">Última key gerada</p>
-      <div id="generatedKey" class="generated-key">Nenhuma key gerada ainda.</div>
-      <p id="generatedInfo" class="info"></p>
-      <button class="btn-secondary" onclick="copiarKey()">Copiar Key</button>
-    </div>
+      <div class="panel-body">
+        <aside class="left-column">
+          <div class="card">
+            <div class="card-title">
+              Nova key
+              <span class="mini-label">SQLite local</span>
+            </div>
 
-    <p id="panelMsg" class="success-msg"></p>
+            <label for="duration">Duração da key</label>
+            <select id="duration">
+              <option value="1">1 dia</option>
+              <option value="3">3 dias</option>
+              <option value="7">7 dias</option>
+              <option value="15">15 dias</option>
+              <option value="30">30 dias</option>
+              <option value="60">60 dias</option>
+              <option value="90">90 dias</option>
+            </select>
 
-    <div class="keys-list" id="keysList"></div>
-  </main>
+            <button id="createBtn">Gerar Key</button>
+
+            <div class="result-box">
+              <p class="result-title">Última key gerada</p>
+              <div id="generatedKey" class="generated-key">Nenhuma key gerada ainda.</div>
+              <p id="generatedInfo" class="info"></p>
+              <button id="copyBtn" class="btn-secondary">Copiar Key</button>
+            </div>
+
+            <p id="panelMsg" class="success-msg"></p>
+          </div>
+
+          <div class="card" style="margin-top:14px;">
+            <div class="card-title">
+              Banco de dados
+              <span class="mini-label">FastAPI</span>
+            </div>
+
+            <div class="db-box">
+              <div class="db-line">
+                <span>Tipo</span>
+                <strong>SQLite local</strong>
+              </div>
+              <div class="db-line">
+                <span>Arquivo</span>
+                <strong>database.db</strong>
+              </div>
+              <div class="db-line">
+                <span>Origem</span>
+                <strong>Render / FastAPI</strong>
+              </div>
+              <div class="db-line">
+                <span>Proxy</span>
+                <strong>/api</strong>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <section class="right-column">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div id="statTotal" class="stat-number">0</div>
+              <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-card">
+              <div id="statActive" class="stat-number">0</div>
+              <div class="stat-label">Ativas</div>
+            </div>
+            <div class="stat-card">
+              <div id="statOffline" class="stat-number">0</div>
+              <div class="stat-label">Offline</div>
+            </div>
+            <div class="stat-card">
+              <div id="statExpired" class="stat-number">0</div>
+              <div class="stat-label">Expiradas</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              Keys cadastradas
+              <span id="keysCount" class="mini-label">0 keys</span>
+            </div>
+
+            <div class="tools-row">
+              <input id="searchKey" type="text" placeholder="Pesquisar key...">
+              <select id="filterStatus">
+                <option value="all">Todos os status</option>
+                <option value="active">Ativas</option>
+                <option value="offline">Offline</option>
+                <option value="expired">Expiradas</option>
+              </select>
+            </div>
+
+            <div class="keys-list" id="keysList"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </section>
 
   <script>
-    /*
-      Usa o proxy do Netlify.
-      Configure o arquivo netlify.toml para redirecionar /api/* para seu FastAPI.
-    */
     const API_BASE = "/api";
 
     const loginScreen = document.getElementById("loginScreen");
@@ -378,13 +786,26 @@
     const loginError = document.getElementById("loginError");
     const loginBtn = document.getElementById("loginBtn");
     const createBtn = document.getElementById("createBtn");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const copyBtn = document.getElementById("copyBtn");
 
     const generatedKey = document.getElementById("generatedKey");
     const generatedInfo = document.getElementById("generatedInfo");
     const keysList = document.getElementById("keysList");
     const panelMsg = document.getElementById("panelMsg");
+    const apiStatus = document.getElementById("apiStatus");
+
+    const statTotal = document.getElementById("statTotal");
+    const statActive = document.getElementById("statActive");
+    const statOffline = document.getElementById("statOffline");
+    const statExpired = document.getElementById("statExpired");
+    const keysCount = document.getElementById("keysCount");
+    const searchKey = document.getElementById("searchKey");
+    const filterStatus = document.getElementById("filterStatus");
 
     let lastKey = "";
+    let allKeys = [];
 
     function getToken() {
       return sessionStorage.getItem("admin_token");
@@ -422,6 +843,13 @@
         .replaceAll("'", "&#039;");
     }
 
+    function setApiStatus(online, text) {
+      apiStatus.innerHTML = `
+        <span class="status-dot" style="background:${online ? "var(--success)" : "var(--danger)"}"></span>
+        ${escapeHTML(text)}
+      `;
+    }
+
     async function apiFetch(path, options = {}) {
       const token = getToken();
 
@@ -436,7 +864,8 @@
 
       const response = await fetch(`${API_BASE}${path}`, {
         ...options,
-        headers
+        headers,
+        cache: "no-store"
       });
 
       let data = null;
@@ -472,21 +901,20 @@
       setLoading(loginBtn, true, "Entrando...", "Entrar");
 
       try {
-        const data = await fetch(`${API_BASE}/admin/login`, {
+        const response = await fetch(`${API_BASE}/admin/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({ password })
-        }).then(async (res) => {
-          const json = await res.json().catch(() => ({}));
-
-          if (!res.ok) {
-            throw new Error(json.detail || json.message || "Senha incorreta.");
-          }
-
-          return json;
+          body: JSON.stringify({ password }),
+          cache: "no-store"
         });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(data.detail || data.message || "Senha incorreta.");
+        }
 
         if (!data.token) {
           throw new Error("A API não retornou token.");
@@ -507,10 +935,12 @@
     function logoutAdmin() {
       clearToken();
       lastKey = "";
+      allKeys = [];
       generatedKey.textContent = "Nenhuma key gerada ainda.";
       generatedInfo.textContent = "";
       keysList.innerHTML = "";
       panelMsg.textContent = "";
+      updateStats([]);
       showLogin();
     }
 
@@ -522,12 +952,15 @@
           method: "GET"
         });
 
-        const keys = Array.isArray(data.keys) ? data.keys : [];
-        renderKeys(keys);
+        allKeys = Array.isArray(data.keys) ? data.keys : [];
+        updateStats(allKeys);
+        renderKeys();
         panelMsg.textContent = "";
+        setApiStatus(true, "API conectada");
 
       } catch (error) {
         panelMsg.textContent = "";
+        setApiStatus(false, "API offline");
         keysList.innerHTML = `
           <div class="key-item">
             <div class="key-date">${escapeHTML(error.message)}</div>
@@ -623,37 +1056,79 @@
       if (item.offline || item.active === false) {
         return {
           text: "Offline",
+          value: "offline",
           className: "status-offline"
         };
       }
 
-      if (venceu) {
+      if (venceu || item.expired === true) {
         return {
           text: "Expirada",
+          value: "expired",
           className: "status-expired"
         };
       }
 
       return {
         text: "Ativa",
+        value: "active",
         className: "status-active"
       };
     }
 
-    function renderKeys(keys) {
+    function updateStats(keys) {
+      const total = keys.length;
+      let active = 0;
+      let offline = 0;
+      let expired = 0;
+
+      keys.forEach((item) => {
+        const status = getKeyStatus(item).value;
+
+        if (status === "active") active++;
+        if (status === "offline") offline++;
+        if (status === "expired") expired++;
+      });
+
+      statTotal.textContent = total;
+      statActive.textContent = active;
+      statOffline.textContent = offline;
+      statExpired.textContent = expired;
+      keysCount.textContent = `${total} key${total === 1 ? "" : "s"}`;
+    }
+
+    function getFilteredKeys() {
+      const query = searchKey.value.trim().toLowerCase();
+      const statusFilter = filterStatus.value;
+
+      return allKeys.filter((item) => {
+        const code = String(item.key || "").toLowerCase();
+        const status = getKeyStatus(item).value;
+
+        const matchesSearch = !query || code.includes(query);
+        const matchesStatus = statusFilter === "all" || status === statusFilter;
+
+        return matchesSearch && matchesStatus;
+      });
+    }
+
+    function renderKeys() {
+      const keys = getFilteredKeys();
+
       if (!keys.length) {
         keysList.innerHTML = `
           <div class="key-item">
-            <div class="key-date">Nenhuma key criada ainda.</div>
+            <div class="key-date">Nenhuma key encontrada.</div>
           </div>
         `;
         return;
       }
 
       keysList.innerHTML = keys.map((item) => {
-        const key = escapeHTML(item.key);
+        const keyRaw = String(item.key || "");
+        const key = escapeHTML(keyRaw);
         const status = getKeyStatus(item);
-        const isOffline = item.offline || item.active === false;
+        const isOffline = status.value === "offline";
 
         const duration = escapeHTML(item.duration_days || "-");
         const createdAt = item.created_at ? formatDate(new Date(item.created_at)) : "-";
@@ -661,14 +1136,15 @@
 
         return `
           <div class="key-item ${isOffline ? "offline" : ""}">
-            <div class="key-code">${key}</div>
-
-            <div class="key-date">
-              Status:
-              <span class="${status.className}">
+            <div class="key-head">
+              <div class="key-code">${key}</div>
+              <span class="status-badge ${status.className}">
                 ${escapeHTML(status.text)}
               </span>
-              | Duração: ${duration} dia(s)
+            </div>
+
+            <div class="key-date">
+              Duração: ${duration} dia(s)
             </div>
 
             <div class="key-date">
@@ -681,8 +1157,8 @@
 
             ${
               isOffline
-                ? `<button class="btn-online" onclick="ativarKey('${key}')">Ativar Key</button>`
-                : `<button class="btn-offline" onclick="deixarOffline('${key}')">Deixar Offline</button>`
+                ? `<button class="btn-online" data-action="online" data-key="${key}">Ativar Key</button>`
+                : `<button class="btn-offline" data-action="offline" data-key="${key}">Deixar Offline</button>`
             }
           </div>
         `;
@@ -716,9 +1192,35 @@
       });
     }
 
+    loginBtn.addEventListener("click", loginAdmin);
+    createBtn.addEventListener("click", gerarKey);
+    refreshBtn.addEventListener("click", carregarKeys);
+    logoutBtn.addEventListener("click", logoutAdmin);
+    copyBtn.addEventListener("click", copiarKey);
+
     adminPassword.addEventListener("keydown", function(event) {
       if (event.key === "Enter") {
         loginAdmin();
+      }
+    });
+
+    searchKey.addEventListener("input", renderKeys);
+    filterStatus.addEventListener("change", renderKeys);
+
+    keysList.addEventListener("click", function(event) {
+      const button = event.target.closest("button[data-action]");
+
+      if (!button) return;
+
+      const action = button.dataset.action;
+      const key = button.dataset.key;
+
+      if (action === "offline") {
+        deixarOffline(key);
+      }
+
+      if (action === "online") {
+        ativarKey(key);
       }
     });
 
