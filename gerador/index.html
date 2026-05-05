@@ -21,8 +21,12 @@
   ">
 
   <title>Veltrix Space</title>
+
+  <link rel="icon" type="image/png" href="./css/veltrix.png">
+  <link rel="apple-touch-icon" href="./css/veltrix.png">
   <link rel="stylesheet" href="./css/neon.css">
 </head>
+
 <body>
 
   <a
@@ -42,18 +46,12 @@
     <div class="login-box">
 
       <div class="brand-mark" aria-hidden="true">
-        <svg viewBox="0 0 64 64">
-          <defs>
-            <linearGradient id="veltrixGradient" x1="10" y1="10" x2="54" y2="54">
-              <stop offset="0%" stop-color="#88d4ff"/>
-              <stop offset="100%" stop-color="#ffffff"/>
-            </linearGradient>
-          </defs>
-          <path class="brand-ring" d="M14 23c4-8 13-13 22-13 8 0 15 3 20 9"/>
-          <path class="brand-v" d="M19 18l13 28 13-28"/>
-          <path class="brand-sweep" d="M12 40c5 8 12 12 21 12 9 0 16-4 21-12"/>
-          <circle cx="32" cy="32" r="2.5"/>
-        </svg>
+        <img
+          src="./css/veltrix.png"
+          alt=""
+          class="veltrix-logo"
+          draggable="false"
+        >
       </div>
 
       <h1 class="login-title">Veltrix Space</h1>
@@ -91,20 +89,15 @@
   </section>
 
   <main id="appContainer" class="container hidden">
+
     <div class="header">
       <div class="brand-mark app-brand" aria-hidden="true">
-        <svg viewBox="0 0 64 64">
-          <defs>
-            <linearGradient id="veltrixGradientApp" x1="10" y1="10" x2="54" y2="54">
-              <stop offset="0%" stop-color="#88d4ff"/>
-              <stop offset="100%" stop-color="#ffffff"/>
-            </linearGradient>
-          </defs>
-          <path class="brand-ring app-ring" d="M14 23c4-8 13-13 22-13 8 0 15 3 20 9"/>
-          <path class="brand-v app-v" d="M19 18l13 28 13-28"/>
-          <path class="brand-sweep app-sweep" d="M12 40c5 8 12 12 21 12 9 0 16-4 21-12"/>
-          <circle cx="32" cy="32" r="2.5"/>
-        </svg>
+        <img
+          src="./css/veltrix.png"
+          alt=""
+          class="veltrix-logo app-logo"
+          draggable="false"
+        >
       </div>
 
       <div class="badge">
@@ -113,7 +106,9 @@
       </div>
 
       <h2>Veltrix Space</h2>
-      <p class="app-subtitle">Escolha a plataforma, defina a quantidade e gere os resultados com acesso validado.</p>
+      <p class="app-subtitle">
+        Escolha a plataforma, defina a quantidade e gere os resultados com acesso validado.
+      </p>
     </div>
 
     <div class="dropdown" id="dropdown">
@@ -123,6 +118,7 @@
       </button>
 
       <div class="options" id="options">
+
         <button type="button" class="option-btn" data-type="canva">
           <img
             class="icon"
@@ -158,6 +154,7 @@
           >
           <span>YouTube</span>
         </button>
+
       </div>
     </div>
 
