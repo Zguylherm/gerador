@@ -15,22 +15,52 @@ const KNUZ_APP = (() => {
   const copyBtn = document.getElementById("copyBtn");
   const clearBtn = document.getElementById("clearBtn");
 
+  const tiposPermitidos = [
+    "canva",
+    "spotify",
+    "deezer",
+    "yt",
+    "youtube",
+    "primevideo",
+    "prime",
+    "prime video"
+  ];
+
   function toggleDropdown(){
-    if(!window.KNUZ_AUTH.isUnlocked()) return;
+    if(!window.KNUZ_AUTH || !window.KNUZ_AUTH.isUnlocked()) return;
+
     options.classList.toggle("open");
   }
 
   function closeDropdown(){
-    options.classList.remove("open");
+    if(options){
+      options.classList.remove("open");
+    }
   }
 
   function selectOption(button){
-    tipoSelecionado = button.dataset.type;
+    if(!button) return;
+
+    const tipo = String(button.dataset.type || "").trim().toLowerCase();
+
+    if(!tiposPermitidos.includes(tipo)){
+      if(window.KNUZ_AUTH){
+        window.KNUZ_AUTH.setInfo("Plataforma inválida.");
+      }
+      return;
+    }
+
+    tipoSelecionado = tipo;
     selectedOption.innerHTML = button.innerHTML;
     closeDropdown();
   }
 
   async function gerarSeguro(){
+    if(!window.KNUZ_AUTH){
+      resultado.value = "Sistema de autenticação não carregado.";
+      return;
+    }
+
     const accessOk = await window.KNUZ_AUTH.garantirAcesso();
 
     if(!accessOk){
@@ -39,6 +69,11 @@ const KNUZ_APP = (() => {
 
     const qtd = Number(qtdInput.value);
     const key = window.KNUZ_AUTH.pegarKey();
+
+    if(!key){
+      resultado.value = "Key não encontrada. Faça login novamente.";
+      return;
+    }
 
     if(!qtd || qtd <= 0){
       resultado.value = "Digite uma quantidade válida.";
@@ -62,7 +97,8 @@ const KNUZ_APP = (() => {
         body:JSON.stringify({
           key,
           type:tipoSelecionado,
-          amount:qtd
+          amount:qtd,
+          device_id: window.KNUZ_AUTH.getDeviceId()
         }),
         cache:"no-store",
         credentials:"same-origin"
@@ -87,6 +123,10 @@ const KNUZ_APP = (() => {
   }
 
   async function copiarResultado(){
+    if(!window.KNUZ_AUTH){
+      return;
+    }
+
     const accessOk = await window.KNUZ_AUTH.garantirAcesso();
 
     if(!accessOk){
@@ -108,13 +148,27 @@ const KNUZ_APP = (() => {
   function limparResultado(){
     resultado.value = "";
     qtdInput.value = "";
-    window.KNUZ_AUTH.setInfo("Resultado limpo.");
+
+    if(window.KNUZ_AUTH){
+      window.KNUZ_AUTH.setInfo("Resultado limpo.");
+    }
   }
 
-  selectedBtn.addEventListener("click", toggleDropdown);
-  generateBtn.addEventListener("click", gerarSeguro);
-  copyBtn.addEventListener("click", copiarResultado);
-  clearBtn.addEventListener("click", limparResultado);
+  if(selectedBtn){
+    selectedBtn.addEventListener("click", toggleDropdown);
+  }
+
+  if(generateBtn){
+    generateBtn.addEventListener("click", gerarSeguro);
+  }
+
+  if(copyBtn){
+    copyBtn.addEventListener("click", copiarResultado);
+  }
+
+  if(clearBtn){
+    clearBtn.addEventListener("click", limparResultado);
+  }
 
   optionButtons.forEach((button) => {
     button.addEventListener("click", () => selectOption(button));
@@ -126,9 +180,15 @@ const KNUZ_APP = (() => {
     }
   });
 
-  selectOption(document.querySelector('.option-btn[data-type="canva"]'));
+  const defaultOption = document.querySelector('.option-btn[data-type="canva"]');
 
-  return {};
+  if(defaultOption){
+    selectOption(defaultOption);
+  }
+
+  return {
+    getTipoSelecionado: () => tipoSelecionado
+  };
 })();
 
 window.KNUZ_APP = KNUZ_APP;
