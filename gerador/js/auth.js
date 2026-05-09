@@ -14,6 +14,25 @@ const KNUZ_AUTH = (() => {
   const keyInfo = document.getElementById("keyInfo");
   const loginForm = document.getElementById("loginForm");
 
+  function getDeviceId(){
+    let deviceId = localStorage.getItem("veltrix_device_id");
+
+    if(!deviceId){
+      if(window.crypto && crypto.randomUUID){
+        deviceId = crypto.randomUUID();
+      }else{
+        deviceId = "dev_" +
+          Math.random().toString(36).slice(2) +
+          Date.now().toString(36) +
+          Math.random().toString(36).slice(2);
+      }
+
+      localStorage.setItem("veltrix_device_id", deviceId);
+    }
+
+    return deviceId;
+  }
+
   function setLoading(button, loading, loadingText, normalText){
     button.disabled = loading;
     button.textContent = loading ? loadingText : normalText;
@@ -76,7 +95,10 @@ const KNUZ_AUTH = (() => {
       headers:{
         "Content-Type":"application/json"
       },
-      body:JSON.stringify({ key }),
+      body:JSON.stringify({
+        key,
+        device_id: getDeviceId()
+      }),
       cache:"no-store",
       credentials:"same-origin"
     });
@@ -139,7 +161,13 @@ const KNUZ_AUTH = (() => {
       }
 
       removerKey();
-      mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+
+      if(data.status === "device_blocked"){
+        mostrarLogin(data.message || "Essa key já está vinculada a outro dispositivo.");
+      }else{
+        mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+      }
+
       return false;
 
     }catch{
@@ -162,7 +190,13 @@ const KNUZ_AUTH = (() => {
 
       if(!data.valid){
         removerKey();
-        mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+
+        if(data.status === "device_blocked"){
+          mostrarLogin(data.message || "Essa key já está vinculada a outro dispositivo.");
+        }else{
+          mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+        }
+
         return false;
       }
 
@@ -197,7 +231,13 @@ const KNUZ_AUTH = (() => {
 
         if(!data.valid){
           removerKey();
-          mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+
+          if(data.status === "device_blocked"){
+            mostrarLogin(data.message || "Essa key já está vinculada a outro dispositivo.");
+          }else{
+            mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+          }
+
           return;
         }
 
@@ -250,6 +290,7 @@ const KNUZ_AUTH = (() => {
     pegarKey,
     garantirAcesso,
     logout,
+    getDeviceId,
     isUnlocked: () => isUnlocked,
     setInfo: (msg) => {
       keyInfo.textContent = msg;
