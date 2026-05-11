@@ -14,13 +14,18 @@
     frame-ancestors 'none';
     form-action 'self';
     img-src 'self' data: https:;
-    style-src 'self';
+    style-src 'self' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com;
     script-src 'self';
     connect-src 'self';
     upgrade-insecure-requests;
   ">
 
   <title>Veltrix Space</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="icon" type="image/png" href="./css/veltrix.png">
   <link rel="apple-touch-icon" href="./css/veltrix.png">
@@ -29,9 +34,14 @@
 
 <body>
 
+  <!-- Ambient orbs -->
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+
   <a
     class="discord-float"
-    href="https://discord.gg/gmVcJQNNeM"
+    href="https://discord.gg/SEU-LINK"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Entrar no Discord"
@@ -46,12 +56,7 @@
     <div class="login-box">
 
       <div class="brand-mark" aria-hidden="true">
-        <img
-          src="./css/veltrix.png"
-          alt=""
-          class="veltrix-logo"
-          draggable="false"
-        >
+        <img src="./css/veltrix.png" alt="" class="veltrix-logo" draggable="false">
       </div>
 
       <h1 class="login-title">Veltrix Space</h1>
@@ -75,13 +80,12 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          Comprar Key Agora
+          ✦ Comprar Key Agora
         </a>
       </form>
 
       <p class="support-line">
-        Suporte:
-        <a href="mailto:suporte@veltrix.space">suporte@veltrix.space</a>
+        Suporte: <a href="mailto:suporte@veltrix.space">suporte@veltrix.space</a>
       </p>
 
       <p id="loginMsg" class="login-error"></p>
@@ -92,12 +96,7 @@
 
     <div class="header">
       <div class="brand-mark app-brand" aria-hidden="true">
-        <img
-          src="./css/veltrix.png"
-          alt=""
-          class="veltrix-logo app-logo"
-          draggable="false"
-        >
+        <img src="./css/veltrix.png" alt="" class="veltrix-logo app-logo" draggable="false">
       </div>
 
       <div class="badge">
@@ -118,52 +117,26 @@
       </button>
 
       <div class="options" id="options">
-
         <button type="button" class="option-btn" data-type="canva">
-          <img
-            class="icon"
-            src="https://static.vecteezy.com/system/resources/previews/032/329/171/non_2x/canva-icon-logo-symbol-free-png.png"
-            alt="Canva"
-          >
+          <img class="icon" src="https://static.vecteezy.com/system/resources/previews/032/329/171/non_2x/canva-icon-logo-symbol-free-png.png" alt="Canva">
           <span>Canva</span>
         </button>
-
         <button type="button" class="option-btn" data-type="spotify">
-          <img
-            class="icon"
-            src="https://s3-alpha.figma.com/hub/file/2734964093/9f5edc36-eb4d-414a-8447-10514f2bc224-cover.png"
-            alt="Spotify"
-          >
+          <img class="icon" src="https://s3-alpha.figma.com/hub/file/2734964093/9f5edc36-eb4d-414a-8447-10514f2bc224-cover.png" alt="Spotify">
           <span>Spotify</span>
         </button>
-
         <button type="button" class="option-btn" data-type="deezer">
-          <img
-            class="icon"
-            src="https://play-lh.googleusercontent.com/8WWCKxLfdLkAEuPF67AnsqUNgo20W2z777yMLtqo64i2MkzKjef4g0mw-8eAqekAbU4=w240-h480-rw"
-            alt="Deezer"
-          >
+          <img class="icon" src="https://play-lh.googleusercontent.com/8WWCKxLfdLkAEuPF67AnsqUNgo20W2z777yMLtqo64i2MkzKjef4g0mw-8eAqekAbU4=w240-h480-rw" alt="Deezer">
           <span>Deezer</span>
         </button>
-
         <button type="button" class="option-btn" data-type="yt">
-          <img
-            class="icon"
-            src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png"
-            alt="YouTube"
-          >
+          <img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube">
           <span>YouTube</span>
         </button>
-
         <button type="button" class="option-btn" data-type="primevideo">
-          <img
-            class="icon"
-            src="https://m.media-amazon.com/images/I/31W9hs7w0JL.png"
-            alt="Prime Video"
-          >
+          <img class="icon" src="https://m.media-amazon.com/images/G/01/digital/video/web/logo-min-remaster.png" alt="Prime Video">
           <span>Prime Video</span>
         </button>
-
       </div>
     </div>
 
