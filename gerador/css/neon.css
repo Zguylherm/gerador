@@ -614,3 +614,23 @@ button.loading-state::before {
   .discord-float { width: 44px; height: 44px; right: 14px; top: 14px; border-radius: 14px; }
   .top-actions button { margin-top: 10px; }
 }
+.option-soon {
+  opacity: 0.72;
+}
+
+.option-soon:hover {
+  background: rgba(91, 200, 255, 0.07);
+}
+
+.soon-badge {
+  margin-left: auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(91, 200, 255, 0.95);
+  background: rgba(91, 200, 255, 0.10);
+  border: 1px solid rgba(91, 200, 255, 0.22);
+  white-space: nowrap;
+}
