@@ -34,6 +34,8 @@ const KNUZ_AUTH = (() => {
   }
 
   function setLoading(button, loading, loadingText, normalText){
+    if(!button) return;
+
     button.disabled = loading;
     button.textContent = loading ? loadingText : normalText;
   }
@@ -54,8 +56,14 @@ const KNUZ_AUTH = (() => {
 
   function bloquearInterface(){
     isUnlocked = false;
-    appContainer.classList.add("hidden");
-    loginScreen.classList.remove("hidden");
+
+    if(appContainer){
+      appContainer.classList.add("hidden");
+    }
+
+    if(loginScreen){
+      loginScreen.classList.remove("hidden");
+    }
 
     const resultado = document.getElementById("resultado");
     const qtd = document.getElementById("qtd");
@@ -71,19 +79,33 @@ const KNUZ_AUTH = (() => {
 
   function mostrarLogin(msg = ""){
     bloquearInterface();
-    loginMsg.textContent = msg;
+
+    if(loginMsg){
+      loginMsg.textContent = msg;
+    }
   }
 
   function mostrarApp(data){
-    loginScreen.classList.add("hidden");
-    appContainer.classList.remove("hidden");
+    if(loginScreen){
+      loginScreen.classList.add("hidden");
+    }
+
+    if(appContainer){
+      appContainer.classList.remove("hidden");
+    }
+
     isUnlocked = true;
 
     if(data && data.expires_at){
       sessionStorage.setItem("key_expires_at", data.expires_at);
-      keyInfo.textContent = `Acesso liberado até: ${formatDate(new Date(data.expires_at))}`;
+
+      if(keyInfo){
+        keyInfo.textContent = `Acesso liberado até: ${formatDate(new Date(data.expires_at))}`;
+      }
     }else{
-      keyInfo.textContent = "Acesso liberado.";
+      if(keyInfo){
+        keyInfo.textContent = "Acesso liberado.";
+      }
     }
 
     iniciarVerificacaoAutomatica();
@@ -91,16 +113,16 @@ const KNUZ_AUTH = (() => {
 
   async function validarKey(key){
     const response = await fetch(`${API_BASE}/validate-key`, {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
       },
-      body:JSON.stringify({
+      body: JSON.stringify({
         key,
         device_id: getDeviceId()
       }),
-      cache:"no-store",
-      credentials:"same-origin"
+      cache: "no-store",
+      credentials: "same-origin"
     });
 
     const data = await response.json().catch(() => ({}));
@@ -113,14 +135,19 @@ const KNUZ_AUTH = (() => {
   }
 
   async function loginComKey(){
-    const key = keyInput.value.trim();
+    const key = keyInput ? keyInput.value.trim() : "";
 
     if(!key){
-      loginMsg.textContent = "Digite uma key.";
+      if(loginMsg){
+        loginMsg.textContent = "Digite uma key.";
+      }
       return;
     }
 
-    loginMsg.textContent = "";
+    if(loginMsg){
+      loginMsg.textContent = "";
+    }
+
     setLoading(loginBtn, true, "Validando...", "Entrar");
 
     try{
@@ -128,17 +155,28 @@ const KNUZ_AUTH = (() => {
 
       if(!data.valid){
         removerKey();
-        loginMsg.textContent = data.message || "Key inválida.";
+
+        if(loginMsg){
+          loginMsg.textContent = data.message || "Key inválida.";
+        }
+
         return;
       }
 
       salvarKey(key);
-      keyInput.value = "";
+
+      if(keyInput){
+        keyInput.value = "";
+      }
+
       mostrarApp(data);
 
     }catch(error){
       removerKey();
-      loginMsg.textContent = error.message || "Erro ao validar key.";
+
+      if(loginMsg){
+        loginMsg.textContent = error.message || "Erro ao validar key.";
+      }
     }finally{
       setLoading(loginBtn, false, "Validando...", "Entrar");
     }
@@ -165,14 +203,14 @@ const KNUZ_AUTH = (() => {
       if(data.status === "device_blocked"){
         mostrarLogin(data.message || "Essa key já está vinculada a outro dispositivo.");
       }else{
-        mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+        mostrarLogin(data.message || "Sua key expirou, ficou offline ou está inválida.");
       }
 
       return false;
 
-    }catch{
+    }catch(error){
       removerKey();
-      mostrarLogin("Não foi possível validar sua key.");
+      mostrarLogin(error.message || "Não foi possível validar sua key.");
       return false;
     }
   }
@@ -194,21 +232,21 @@ const KNUZ_AUTH = (() => {
         if(data.status === "device_blocked"){
           mostrarLogin(data.message || "Essa key já está vinculada a outro dispositivo.");
         }else{
-          mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+          mostrarLogin(data.message || "Sua key expirou, ficou offline ou está inválida.");
         }
 
         return false;
       }
 
-      if(data.expires_at){
+      if(data.expires_at && keyInfo){
         keyInfo.textContent = `Acesso liberado até: ${formatDate(new Date(data.expires_at))}`;
       }
 
       return true;
 
-    }catch{
+    }catch(error){
       removerKey();
-      mostrarLogin("Sessão encerrada. Valide sua key novamente.");
+      mostrarLogin(error.message || "Sessão encerrada. Valide sua key novamente.");
       return false;
     }
   }
@@ -235,19 +273,19 @@ const KNUZ_AUTH = (() => {
           if(data.status === "device_blocked"){
             mostrarLogin(data.message || "Essa key já está vinculada a outro dispositivo.");
           }else{
-            mostrarLogin(data.message || "Sua key expirou ou ficou offline.");
+            mostrarLogin(data.message || "Sua key expirou, ficou offline ou está inválida.");
           }
 
           return;
         }
 
-        if(data.expires_at){
+        if(data.expires_at && keyInfo){
           keyInfo.textContent = `Acesso liberado até: ${formatDate(new Date(data.expires_at))}`;
         }
 
-      }catch{
+      }catch(error){
         removerKey();
-        mostrarLogin("Sessão encerrada. Valide sua key novamente.");
+        mostrarLogin(error.message || "Sessão encerrada. Valide sua key novamente.");
       }
     }, 30000);
   }
@@ -258,11 +296,11 @@ const KNUZ_AUTH = (() => {
     }
 
     return date.toLocaleString("pt-BR", {
-      day:"2-digit",
-      month:"2-digit",
-      year:"numeric",
-      hour:"2-digit",
-      minute:"2-digit"
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
     });
   }
 
@@ -271,10 +309,12 @@ const KNUZ_AUTH = (() => {
     mostrarLogin(msg);
   }
 
-  loginForm.addEventListener("submit", function(e){
-    e.preventDefault();
-    loginComKey();
-  });
+  if(loginForm){
+    loginForm.addEventListener("submit", function(e){
+      e.preventDefault();
+      loginComKey();
+    });
+  }
 
   document.addEventListener("visibilitychange", function(){
     if(document.visibilityState === "visible" && isUnlocked){
@@ -293,7 +333,9 @@ const KNUZ_AUTH = (() => {
     getDeviceId,
     isUnlocked: () => isUnlocked,
     setInfo: (msg) => {
-      keyInfo.textContent = msg;
+      if(keyInfo){
+        keyInfo.textContent = msg;
+      }
     }
   };
 })();
