@@ -28,6 +28,7 @@ const KNUZ_APP = (() => {
 
   function toggleDropdown(){
     if(!window.KNUZ_AUTH || !window.KNUZ_AUTH.isUnlocked()) return;
+    if(!options || !dropdown) return;
 
     options.classList.toggle("open");
     dropdown.classList.toggle("is-open", options.classList.contains("open"));
@@ -36,6 +37,9 @@ const KNUZ_APP = (() => {
   function closeDropdown(){
     if(options){
       options.classList.remove("open");
+    }
+
+    if(dropdown){
       dropdown.classList.remove("is-open");
     }
   }
@@ -43,17 +47,32 @@ const KNUZ_APP = (() => {
   function selectOption(button){
     if(!button) return;
 
+    if(button.dataset.soon === "true"){
+      if(window.KNUZ_AUTH){
+        window.KNUZ_AUTH.setInfo("Steam estará disponível em breve.");
+      }
+
+      closeDropdown();
+      return;
+    }
+
     const tipo = String(button.dataset.type || "").trim().toLowerCase();
 
     if(!tiposPermitidos.includes(tipo)){
       if(window.KNUZ_AUTH){
         window.KNUZ_AUTH.setInfo("Plataforma inválida.");
       }
+
+      closeDropdown();
       return;
     }
 
     tipoSelecionado = tipo;
-    selectedOption.innerHTML = button.innerHTML;
+
+    if(selectedOption){
+      selectedOption.innerHTML = button.innerHTML;
+    }
+
     closeDropdown();
   }
 
@@ -93,18 +112,18 @@ const KNUZ_APP = (() => {
 
     try{
       const response = await fetch("/api/generate", {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
         },
-        body:JSON.stringify({
+        body: JSON.stringify({
           key,
-          type:tipoSelecionado,
-          amount:qtd,
+          type: tipoSelecionado,
+          amount: qtd,
           device_id: window.KNUZ_AUTH.getDeviceId()
         }),
-        cache:"no-store",
-        credentials:"same-origin"
+        cache: "no-store",
+        credentials: "same-origin"
       });
 
       const data = await response.json().catch(() => ({}));
