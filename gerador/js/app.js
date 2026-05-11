@@ -30,11 +30,13 @@ const KNUZ_APP = (() => {
     if(!window.KNUZ_AUTH || !window.KNUZ_AUTH.isUnlocked()) return;
 
     options.classList.toggle("open");
+    dropdown.classList.toggle("is-open", options.classList.contains("open"));
   }
 
   function closeDropdown(){
     if(options){
       options.classList.remove("open");
+      dropdown.classList.remove("is-open");
     }
   }
 
@@ -87,6 +89,7 @@ const KNUZ_APP = (() => {
 
     generateBtn.disabled = true;
     generateBtn.textContent = "Gerando...";
+    generateBtn.classList.add("loading-state");
 
     try{
       const response = await fetch("/api/generate", {
@@ -119,6 +122,7 @@ const KNUZ_APP = (() => {
     }finally{
       generateBtn.disabled = false;
       generateBtn.textContent = "Gerar";
+      generateBtn.classList.remove("loading-state");
     }
   }
 
